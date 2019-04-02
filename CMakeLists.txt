@@ -50,11 +50,10 @@ find_package(catkin REQUIRED COMPONENTS
 ##   * add every package in MSG_DEP_SET to generate_messages(DEPENDENCIES ...)
 
 ## Generate messages in the 'msg' folder
-# add_message_files(
-#   FILES
-#   Message1.msg
-#   Message2.msg
-# )
+ add_message_files(
+   FILES
+   Date.msg
+ )
 
 ## Generate services in the 'srv' folder
 add_service_files(
@@ -72,7 +71,7 @@ add_service_files(
 
 ## Generate added messages and services with any dependencies listed here
  generate_messages(
-   DEPENDENCIES actionlib_msgs   std_msgs
+   DEPENDENCIES actionlib_msgs std_msgs
  )
 
 ################################################
@@ -110,6 +109,7 @@ catkin_package(
    LIBRARIES learning_ros
 
   CATKIN_DEPENDS actionlib actionlib_msgs roscpp rospy std_msgs message_runtime
+
   DEPENDS system_lib
 )
 
@@ -173,19 +173,25 @@ target_link_libraries(
 )
 
 add_executable(wheel_server src/wheel_server.cpp)
-add_dependencies(wheel_server ros_learning_gencpp)
+add_dependencies(wheel_server learning_ros_gencpp)
 target_link_libraries(
   wheel_server 
   ${catkin_LIBRARIES}
 )
 
 add_executable(wheel_client src/wheel_client.cpp)
-add_dependencies(wheel_client ros_learning_gencpp)
+add_dependencies(wheel_client learning_ros_gencpp)
 target_link_libraries(
   wheel_client 
   ${catkin_LIBRARIES}
 )
 
+add_executable(param_display src/param_display.cpp)
+
+target_link_libraries(
+  param_display 
+  ${catkin_LIBRARIES}
+)
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
 ## target back to the shorter version for ease of user use
